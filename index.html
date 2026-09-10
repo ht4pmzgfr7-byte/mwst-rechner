@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MwSt-Rechner</title>
+
+<!-- PWA-Grundlagen -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#16233B">
+
+<!-- iOS-spezifisch: macht die App im Standalone-Modus startbar -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MwSt-Rechner">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<style>
+  :root{
+    --paper: #EFEAE0;
+    --paper-line: #DCD5C4;
+    --ink: #16233B;
+    --ink-soft: #4A5568;
+    --accent: #3E7A5C;
+    --accent-ink: #EFEAE0;
+  }
+  *{ box-sizing: border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+    display:flex;
+    justify-content:center;
+    padding: max(28px, env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
+  }
+  .sheet{
+    width:100%;
+    max-width: 420px;
+  }
+  header{
+    margin-bottom: 22px;
+  }
+  h1{
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    letter-spacing: 0.01em;
+  }
+  .subtitle{
+    margin:0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    font-style: italic;
+  }
+
+  .card{
+    background: var(--paper);
+    border: 1px solid var(--paper-line);
+    border-radius: 2px;
+    padding: 22px 20px 6px;
+  }
+
+  .field{
+    margin-bottom: 18px;
+  }
+  label{
+    display:block;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  input[type="number"]{
+    width:100%;
+    font-family: "SF Mono", ui-monospace, "Menlo", monospace;
+    font-size: 1.4rem;
+    padding: 10px 0;
+    border:none;
+    border-bottom: 1px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+  }
+  input[type="number"]:focus{
+    outline:none;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .toggle{
+    display:flex;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    overflow:hidden;
+    margin-bottom: 18px;
+  }
+  .toggle button{
+    flex:1;
+    padding: 10px 6px;
+    border:none;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor:pointer;
+  }
+  .toggle button.active{
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .rates{
+    display:flex;
+    gap:8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+  .rate-btn{
+    padding: 8px 14px;
+    border: 1px solid var(--ink-soft);
+    border-radius: 999px;
+    background: transparent;
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+    cursor:pointer;
+  }
+  .rate-btn.active{
+    border-color: var(--accent);
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
+  .rate-custom{
+    display:flex;
+    align-items:center;
+    gap:6px;
+  }
+  .rate-custom input{
+    width: 64px;
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 0.85rem;
+    padding: 7px 8px;
+    border: 1px solid var(--ink-soft);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .ledger{
+    margin-top: 22px;
+    border-top: 1px solid var(--ink);
+  }
+  .row{
+    display:flex;
+    justify-content: space-between;
+    align-items:baseline;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--paper-line);
+  }
+  .row.total{
+    border-bottom: none;
+    border-top: 1px solid var(--ink);
+    margin-top: 4px;
+  }
+  .row .label{
+    margin:0;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+  .row .value{
+    font-family: "SF Mono", ui-monospace, monospace;
+    font-size: 1.05rem;
+  }
+  .row.total .value{
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  footer{
+    text-align:center;
+    margin-top: 26px;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <header>
+      <h1>MwSt-Rechner</h1>
+      <p class="subtitle">Netto und Brutto, sauber gegengerechnet.</p>
+    </header>
+
+    <div class="card">
+      <div class="toggle">
+        <button id="btnNettoToBrutto" class="active">Netto → Brutto</button>
+        <button id="btnBruttoToNetto">Brutto → Netto</button>
+      </div>
+
+      <div class="field">
+        <label id="amountLabel" for="amount">Nettobetrag (€)</label>
+        <input type="number" id="amount" inputmode="decimal" placeholder="0,00" value="100">
+      </div>
+
+      <div class="field">
+        <label>Steuersatz</label>
+        <div class="rates">
+          <button class="rate-btn active" data-rate="19">19 %</button>
+          <button class="rate-btn" data-rate="7">7 %</button>
+          <div class="rate-custom">
+            <input type="number" id="customRate" inputmode="decimal" placeholder="frei">
+            <span>%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ledger" id="ledger">
+        <div class="row">
+          <p class="label">Netto</p>
+          <p class="value" id="outNetto">100,00 €</p>
+        </div>
+        <div class="row">
+          <p class="label" id="taxLabel">zzgl. 19 % USt</p>
+          <p class="value" id="outSteuer">19,00 €</p>
+        </div>
+        <div class="row total">
+          <p class="label">Brutto</p>
+          <p class="value" id="outBrutto">119,00 €</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+  </div>
+
+<script>
+  const amountInput = document.getElementById('amount');
+  const amountLabel = document.getElementById('amountLabel');
+  const customRate = document.getElementById('customRate');
+  const rateButtons = document.querySelectorAll('.rate-btn');
+  const btnN2B = document.getElementById('btnNettoToBrutto');
+  const btnB2N = document.getElementById('btnBruttoToNetto');
+  const taxLabel = document.getElementById('taxLabel');
+  const outNetto = document.getElementById('outNetto');
+  const outSteuer = document.getElementById('outSteuer');
+  const outBrutto = document.getElementById('outBrutto');
+
+  let mode = 'n2b'; // n2b = Netto->Brutto, b2n = Brutto->Netto
+  let rate = 19;
+
+  function fmt(n){
+    return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
+  }
+
+  function setMode(next){
+    mode = next;
+    btnN2B.classList.toggle('active', mode === 'n2b');
+    btnB2N.classList.toggle('active', mode === 'b2n');
+    amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
+    calculate();
+  }
+
+  function setRate(r, fromCustom){
+    rate = r;
+    rateButtons.forEach(b => b.classList.toggle('active', !fromCustom && parseFloat(b.dataset.rate) === r));
+    if(!fromCustom) customRate.value = '';
+    calculate();
+  }
+
+  function calculate(){
+    const val = parseFloat(amountInput.value.replace(',', '.')) || 0;
+    const r = rate / 100;
+    let netto, steuer, brutto;
+    if(mode === 'n2b'){
+      netto = val;
+      steuer = netto * r;
+      brutto = netto + steuer;
+    } else {
+      brutto = val;
+      netto = brutto / (1 + r);
+      steuer = brutto - netto;
+    }
+    taxLabel.textContent = 'zzgl. ' + rate + ' % USt';
+    outNetto.textContent = fmt(netto);
+    outSteuer.textContent = fmt(steuer);
+    outBrutto.textContent = fmt(brutto);
+  }
+
+  amountInput.addEventListener('input', calculate);
+  btnN2B.addEventListener('click', () => setMode('n2b'));
+  btnB2N.addEventListener('click', () => setMode('b2n'));
+  rateButtons.forEach(b => b.addEventListener('click', () => setRate(parseFloat(b.dataset.rate), false)));
+  customRate.addEventListener('input', () => {
+    const v = parseFloat(customRate.value.replace(',', '.'));
+    if(!isNaN(v)) setRate(v, true);
+  });
+
+  calculate();
+
+  // Service Worker für Offline-Nutzung registrieren
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
