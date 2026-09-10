@@ -249,6 +249,29 @@
   let mode = 'n2b'; // n2b = Netto->Brutto, b2n = Brutto->Netto
   let rate = 19;
 
+  const STORAGE_KEY = 'mwst-rechner-state';
+
+  function saveState(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        amount: amountInput.value,
+        mode: mode,
+        rate: rate
+      }));
+    }catch(e){ /* z.B. privater Modus - dann einfach nicht speichern */ }
+  }
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return;
+      const s = JSON.parse(raw);
+      if(s.amount !== undefined) amountInput.value = s.amount;
+      if(s.mode) mode = s.mode;
+      if(s.rate) rate = s.rate;
+    }catch(e){ /* fehlerhafte gespeicherte Daten ignorieren */ }
+  }
+
   function fmt(n){
     return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
   }
@@ -285,6 +308,7 @@
     outNetto.textContent = fmt(netto);
     outSteuer.textContent = fmt(steuer);
     outBrutto.textContent = fmt(brutto);
+    saveState();
   }
 
   amountInput.addEventListener('input', calculate);
@@ -296,7 +320,20 @@
     if(!isNaN(v)) setRate(v, true);
   });
 
-  calculate();
+  function init(){
+    loadState();
+    // Toggle-Buttons an geladenen Modus anpassen
+    btnN2B.classList.toggle('active', mode === 'n2b');
+    btnB2N.classList.toggle('active', mode === 'b2n');
+    amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
+    // Steuersatz-Buttons an geladenen Satz anpassen
+    const preset = Array.from(rateButtons).find(b => parseFloat(b.dataset.rate) === rate);
+    rateButtons.forEach(b => b.classList.toggle('active', b === preset));
+    if(!preset) customRate.value = rate;
+    calculate();
+  }
+
+  init();
 
   // Service Worker für Offline-Nutzung registrieren
   if('serviceWorker' in navigator){
