@@ -1,7 +1,7 @@
 {
-  "name": "MwSt-Rechner",
-  "short_name": "MwSt",
-  "description": "Netto und Brutto schnell gegenrechnen.",
+  "name": "Steuer-Rechner",
+  "short_name": "Steuer",
+  "description": "MwSt- und Lohnsteuer schnell berechnen.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
