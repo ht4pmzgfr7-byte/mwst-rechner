@@ -31,7 +31,6 @@
     font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
   }
 
-  /* Topbar */
   .topbar{
     position: sticky;
     top: 0;
@@ -43,279 +42,118 @@
     background: var(--paper);
     border-bottom: 1px solid var(--ink);
   }
-  .topbar h1{
-    font-size: 1.15rem;
-    margin:0;
-    font-weight:700;
-  }
+  .topbar h1{ font-size: 1.1rem; margin:0; font-weight:700; }
   .menu-btn{
-    width: 38px;
-    height: 38px;
+    width: 38px; height: 38px;
     border: 1px solid var(--ink);
     border-radius: 2px;
     background: transparent;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    gap:4px;
+    display:flex; flex-direction:column; justify-content:center; align-items:center; gap:4px;
     cursor:pointer;
   }
-  .menu-btn span{
-    display:block;
-    width: 18px;
-    height: 2px;
-    background: var(--ink);
-  }
+  .menu-btn span{ display:block; width: 18px; height: 2px; background: var(--ink); }
 
   .menu-panel{
-    position: absolute;
-    right: 16px;
-    top: 64px;
+    position: absolute; right: 16px; top: 64px;
     background: var(--paper);
     border: 1px solid var(--ink);
     border-radius: 2px;
-    min-width: 220px;
+    min-width: 240px;
     z-index: 30;
     display:none;
     box-shadow: 3px 3px 0 var(--paper-line);
   }
   .menu-panel.open{ display:block; }
   .menu-item{
-    display:block;
-    width:100%;
-    text-align:left;
-    padding: 14px 16px;
-    background:none;
-    border:none;
-    border-bottom: 1px solid var(--paper-line);
-    font-family: inherit;
-    font-size: 0.95rem;
-    color: var(--ink);
-    cursor:pointer;
+    display:block; width:100%; text-align:left;
+    padding: 13px 16px;
+    background:none; border:none; border-bottom: 1px solid var(--paper-line);
+    font-family: inherit; font-size: 0.92rem; color: var(--ink); cursor:pointer;
   }
   .menu-item:last-child{ border-bottom:none; }
-  .menu-item.active{
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .menu-item .desc{
-    display:block;
-    font-size: 0.72rem;
-    color: var(--ink-soft);
-    font-style: italic;
-    margin-top:2px;
-  }
+  .menu-item.active{ background: var(--ink); color: var(--paper); }
+  .menu-item .desc{ display:block; font-size: 0.7rem; color: var(--ink-soft); font-style: italic; margin-top:2px; }
   .menu-item.active .desc{ color: var(--paper-line); }
 
-  .backdrop{
-    display:none;
-    position: fixed;
-    inset:0;
-    z-index:25;
-  }
+  .backdrop{ display:none; position: fixed; inset:0; z-index:25; }
   .backdrop.open{ display:block; }
 
-  main{
-    display:flex;
-    justify-content:center;
-    padding: 22px 18px calc(24px + env(safe-area-inset-bottom));
-  }
-  .sheet{
-    width:100%;
-    max-width: 420px;
-  }
+  main{ display:flex; justify-content:center; padding: 22px 18px calc(24px + env(safe-area-inset-bottom)); }
+  .sheet{ width:100%; max-width: 420px; }
   .view{ display:none; }
   .view.active{ display:block; }
 
-  header.intro{ margin-bottom: 22px; }
-  header.intro h2{
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 4px;
-  }
-  .subtitle{
-    margin:0;
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    font-style: italic;
-  }
+  header.intro{ margin-bottom: 20px; }
+  header.intro h2{ font-size: 1.4rem; font-weight: 700; margin: 0 0 4px; }
+  .subtitle{ margin:0; color: var(--ink-soft); font-size: 0.88rem; font-style: italic; }
 
-  .card{
-    background: var(--paper);
-    border: 1px solid var(--paper-line);
-    border-radius: 2px;
-    padding: 22px 20px 6px;
-  }
+  .card{ background: var(--paper); border: 1px solid var(--paper-line); border-radius: 2px; padding: 20px 18px 6px; margin-bottom: 18px; }
 
-  .field{ margin-bottom: 18px; }
-  label{
-    display:block;
-    font-size: 0.8rem;
-    color: var(--ink-soft);
-    margin-bottom: 6px;
-  }
+  .field{ margin-bottom: 16px; }
+  label{ display:block; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 6px; }
   input[type="number"], select{
     width:100%;
     font-family: "SF Mono", ui-monospace, "Menlo", monospace;
-    font-size: 1.05rem;
-    padding: 10px 0;
-    border:none;
-    border-bottom: 1px solid var(--ink);
-    background: transparent;
-    color: var(--ink);
-    -webkit-appearance: none;
-    appearance: none;
-    border-radius:0;
+    font-size: 1.0rem;
+    padding: 9px 0;
+    border:none; border-bottom: 1px solid var(--ink);
+    background: transparent; color: var(--ink);
+    -webkit-appearance: none; appearance: none; border-radius:0;
   }
   #amount{ font-size: 1.4rem; }
-  input:focus, select:focus{
-    outline:none;
-    border-bottom: 2px solid var(--accent);
-  }
+  input:focus, select:focus{ outline:none; border-bottom: 2px solid var(--accent); }
 
-  .row-inline{
-    display:flex;
-    gap: 16px;
-  }
+  .row-inline{ display:flex; gap: 14px; }
   .row-inline .field{ flex:1; }
 
-  .toggle{
-    display:flex;
-    border: 1px solid var(--ink);
-    border-radius: 2px;
-    overflow:hidden;
-    margin-bottom: 18px;
-  }
-  .toggle button{
-    flex:1;
-    padding: 10px 6px;
-    border:none;
-    background: transparent;
-    font-family: inherit;
-    font-size: 0.85rem;
-    color: var(--ink);
-    cursor:pointer;
-  }
-  .toggle button.active{
-    background: var(--ink);
-    color: var(--paper);
-  }
+  .toggle{ display:flex; border: 1px solid var(--ink); border-radius: 2px; overflow:hidden; margin-bottom: 18px; }
+  .toggle button{ flex:1; padding: 10px 6px; border:none; background: transparent; font-family: inherit; font-size: 0.85rem; color: var(--ink); cursor:pointer; }
+  .toggle button.active{ background: var(--ink); color: var(--paper); }
 
-  .rates{
-    display:flex;
-    gap:8px;
-    margin-bottom: 4px;
-    flex-wrap: wrap;
-  }
-  .rate-btn{
-    padding: 8px 14px;
-    border: 1px solid var(--ink-soft);
-    border-radius: 999px;
-    background: transparent;
-    font-family: "SF Mono", ui-monospace, monospace;
-    font-size: 0.85rem;
-    color: var(--ink);
-    cursor:pointer;
-  }
-  .rate-btn.active{
-    border-color: var(--accent);
-    background: var(--accent);
-    color: var(--accent-ink);
-  }
-  .rate-custom{
-    display:flex;
-    align-items:center;
-    gap:6px;
-  }
-  .rate-custom input{
-    width: 64px;
-    font-family: "SF Mono", ui-monospace, monospace;
-    font-size: 0.85rem;
-    padding: 7px 8px;
-    border: 1px solid var(--ink-soft);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--ink);
-  }
+  .rates{ display:flex; gap:8px; margin-bottom: 4px; flex-wrap: wrap; }
+  .rate-btn{ padding: 8px 14px; border: 1px solid var(--ink-soft); border-radius: 999px; background: transparent; font-family: "SF Mono", ui-monospace, monospace; font-size: 0.85rem; color: var(--ink); cursor:pointer; }
+  .rate-btn.active{ border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+  .rate-custom{ display:flex; align-items:center; gap:6px; }
+  .rate-custom input{ width: 64px; font-family: "SF Mono", ui-monospace, monospace; font-size: 0.85rem; padding: 7px 8px; border: 1px solid var(--ink-soft); border-radius: 999px; background: transparent; color: var(--ink); }
 
-  .checkline{
-    display:flex;
-    align-items:center;
-    gap: 8px;
-    margin-bottom: 18px;
-    font-size: 0.88rem;
-  }
+  .checkline{ display:flex; align-items:center; gap: 8px; margin-bottom: 16px; font-size: 0.86rem; }
   .checkline input{ width:auto; accent-color: var(--accent); }
 
-  .ledger{
-    margin-top: 22px;
-    border-top: 1px solid var(--ink);
-  }
-  .row{
-    display:flex;
-    justify-content: space-between;
-    align-items:baseline;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--paper-line);
-  }
-  .row.total{
-    border-bottom: none;
-    border-top: 1px solid var(--ink);
-    margin-top: 4px;
-  }
-  .row.sub .label{ padding-left: 10px; font-size:0.78rem; }
-  .row.sub .value{ font-size: 0.9rem; }
-  .row .label{
-    margin:0;
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-  }
-  .row .value{
-    font-family: "SF Mono", ui-monospace, monospace;
-    font-size: 1.05rem;
-  }
-  .row.total .value{
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--accent);
-  }
+  .ledger{ margin-top: 18px; border-top: 1px solid var(--ink); }
+  .row{ display:flex; justify-content: space-between; align-items:baseline; padding: 11px 0; border-bottom: 1px solid var(--paper-line); }
+  .row.total{ border-bottom: none; border-top: 1px solid var(--ink); margin-top: 4px; }
+  .row.sub .label{ padding-left: 10px; font-size:0.76rem; }
+  .row.sub .value{ font-size: 0.88rem; }
+  .row .label{ margin:0; font-size: 0.83rem; color: var(--ink-soft); }
+  .row .value{ font-family: "SF Mono", ui-monospace, monospace; font-size: 1.0rem; }
+  .row.total .value{ font-size: 1.25rem; font-weight: 700; color: var(--accent); }
 
-  .disclaimer{
-    margin-top: 16px;
-    font-size: 0.72rem;
-    color: var(--ink-soft);
-    font-style: italic;
-    line-height: 1.5;
-  }
+  .disclaimer{ margin-top: 14px; font-size: 0.7rem; color: var(--ink-soft); font-style: italic; line-height: 1.5; }
 
-  footer{
-    text-align:center;
-    margin-top: 26px;
-    font-size: 0.75rem;
-    color: var(--ink-soft);
-    font-style: italic;
-  }
+  footer{ text-align:center; margin-top: 24px; font-size: 0.74rem; color: var(--ink-soft); font-style: italic; }
+
+  .scenario{ border: 1px solid var(--paper-line); border-radius: 2px; padding: 14px 16px; margin-bottom: 14px; }
+  .scenario.best{ border-color: var(--accent); border-width: 2px; }
+  .scenario h3{ margin: 0 0 8px; font-size: 0.95rem; display:flex; align-items:center; gap:6px; }
+  .scenario h3 .tag{ font-size:0.65rem; background: var(--accent); color: var(--accent-ink); padding: 2px 7px; border-radius: 999px; font-family: "SF Mono", ui-monospace, monospace; }
+  .scenario .row{ padding: 7px 0; }
+  .scenario .row.total{ margin-top:0; }
+
+  .hint{ font-size: 0.8rem; color: var(--ink-soft); line-height:1.5; margin: 0 0 16px; }
 </style>
 </head>
 <body>
 
   <div class="topbar">
     <h1 id="appTitle">MwSt-Rechner</h1>
-    <button class="menu-btn" id="menuBtn" aria-label="Menü">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="menu-btn" id="menuBtn" aria-label="Menü"><span></span><span></span><span></span></button>
   </div>
   <div class="backdrop" id="backdrop"></div>
   <div class="menu-panel" id="menuPanel">
-    <button class="menu-item active" data-view="ust" id="menuItemUst">
-      MwSt-Rechner
-      <span class="desc">Netto ↔ Brutto</span>
-    </button>
-    <button class="menu-item" data-view="lohn" id="menuItemLohn">
-      Lohnsteuer-Rechner
-      <span class="desc">Brutto → Netto Gehalt</span>
-    </button>
+    <button class="menu-item active" data-view="ust" id="menuItemUst">MwSt-Rechner<span class="desc">Netto ↔ Brutto</span></button>
+    <button class="menu-item" data-view="lohn" id="menuItemLohn">Lohnsteuer-Rechner<span class="desc">Brutto → Netto Gehalt</span></button>
+    <button class="menu-item" data-view="paar" id="menuItemPaar">Paar-Vergleich<span class="desc">III/V, IV/IV oder Faktor?</span></button>
+    <button class="menu-item" data-view="ziel" id="menuItemZiel">Brutto für mehr Netto<span class="desc">Nötige Gehaltserhöhung</span></button>
   </div>
 
   <main>
@@ -323,169 +161,135 @@
 
       <!-- ===== USt-RECHNER ===== -->
       <section class="view active" id="view-ust">
-        <header class="intro">
-          <h2>MwSt-Rechner</h2>
-          <p class="subtitle">Netto und Brutto, sauber gegengerechnet.</p>
-        </header>
-
+        <header class="intro"><h2>MwSt-Rechner</h2><p class="subtitle">Netto und Brutto, sauber gegengerechnet.</p></header>
         <div class="card">
           <div class="toggle">
             <button id="btnNettoToBrutto" class="active">Netto → Brutto</button>
             <button id="btnBruttoToNetto">Brutto → Netto</button>
           </div>
-
           <div class="field">
             <label id="amountLabel" for="amount">Nettobetrag (€)</label>
             <input type="number" id="amount" inputmode="decimal" placeholder="0,00" value="100">
           </div>
-
           <div class="field">
             <label>Steuersatz</label>
             <div class="rates">
               <button class="rate-btn active" data-rate="19">19 %</button>
               <button class="rate-btn" data-rate="7">7 %</button>
-              <div class="rate-custom">
-                <input type="number" id="customRate" inputmode="decimal" placeholder="frei">
-                <span>%</span>
-              </div>
+              <div class="rate-custom"><input type="number" id="customRate" inputmode="decimal" placeholder="frei"><span>%</span></div>
             </div>
           </div>
-
           <div class="ledger">
-            <div class="row">
-              <p class="label">Netto</p>
-              <p class="value" id="outNetto">100,00 €</p>
-            </div>
-            <div class="row">
-              <p class="label" id="taxLabel">zzgl. 19 % USt</p>
-              <p class="value" id="outSteuer">19,00 €</p>
-            </div>
-            <div class="row total">
-              <p class="label">Brutto</p>
-              <p class="value" id="outBrutto">119,00 €</p>
-            </div>
+            <div class="row"><p class="label">Netto</p><p class="value" id="outNetto">100,00 €</p></div>
+            <div class="row"><p class="label" id="taxLabel">zzgl. 19 % USt</p><p class="value" id="outSteuer">19,00 €</p></div>
+            <div class="row total"><p class="label">Brutto</p><p class="value" id="outBrutto">119,00 €</p></div>
           </div>
         </div>
-
         <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
       </section>
 
       <!-- ===== LOHNSTEUER-RECHNER ===== -->
       <section class="view" id="view-lohn">
-        <header class="intro">
-          <h2>Lohnsteuer-Rechner</h2>
-          <p class="subtitle">Brutto- zu Nettogehalt, inkl. Steuer & Sozialabgaben.</p>
-        </header>
-
+        <header class="intro"><h2>Lohnsteuer-Rechner</h2><p class="subtitle">Brutto- zu Nettogehalt, inkl. Steuer & Sozialabgaben.</p></header>
         <div class="card">
-          <div class="field">
-            <label for="lohnBrutto">Bruttogehalt pro Monat (€)</label>
-            <input type="number" id="lohnBrutto" inputmode="decimal" value="3500">
-          </div>
-
+          <div class="field"><label for="lohnBrutto">Bruttogehalt pro Monat (€)</label><input type="number" id="lohnBrutto" inputmode="decimal" value="3500"></div>
           <div class="row-inline">
-            <div class="field">
-              <label for="steuerklasse">Steuerklasse</label>
+            <div class="field"><label for="steuerklasse">Steuerklasse</label>
               <select id="steuerklasse">
-                <option value="I">I</option>
-                <option value="II">II (alleinerziehend)</option>
-                <option value="III">III</option>
-                <option value="IV">IV</option>
-                <option value="V">V</option>
-                <option value="VI">VI</option>
+                <option value="I">I</option><option value="II">II (alleinerziehend)</option>
+                <option value="III">III</option><option value="IV">IV</option>
+                <option value="V">V</option><option value="VI">VI</option>
               </select>
             </div>
-            <div class="field">
-              <label for="bundesland">Bundesland</label>
+            <div class="field"><label for="bundesland">Bundesland</label>
               <select id="bundesland">
-                <option value="BW">Baden-Württemberg</option>
-                <option value="BY">Bayern</option>
-                <option value="BE">Berlin</option>
-                <option value="BB">Brandenburg</option>
-                <option value="HB">Bremen</option>
-                <option value="HH">Hamburg</option>
-                <option value="HE">Hessen</option>
-                <option value="MV">Mecklenburg-Vorpommern</option>
-                <option value="NI">Niedersachsen</option>
-                <option value="NW" selected>Nordrhein-Westfalen</option>
-                <option value="RP">Rheinland-Pfalz</option>
-                <option value="SL">Saarland</option>
-                <option value="SN">Sachsen</option>
-                <option value="ST">Sachsen-Anhalt</option>
-                <option value="SH">Schleswig-Holstein</option>
-                <option value="TH">Thüringen</option>
+                <option value="BW">Baden-Württemberg</option><option value="BY">Bayern</option>
+                <option value="BE" selected>Berlin</option><option value="BB">Brandenburg</option>
+                <option value="HB">Bremen</option><option value="HH">Hamburg</option>
+                <option value="HE">Hessen</option><option value="MV">Mecklenburg-Vorpommern</option>
+                <option value="NI">Niedersachsen</option><option value="NW">Nordrhein-Westfalen</option>
+                <option value="RP">Rheinland-Pfalz</option><option value="SL">Saarland</option>
+                <option value="SN">Sachsen</option><option value="ST">Sachsen-Anhalt</option>
+                <option value="SH">Schleswig-Holstein</option><option value="TH">Thüringen</option>
               </select>
             </div>
           </div>
-
           <div class="row-inline">
-            <div class="field">
-              <label for="alter">Alter</label>
-              <input type="number" id="alter" inputmode="numeric" value="30">
-            </div>
-            <div class="field">
-              <label for="kinder">Kinder (Anzahl)</label>
-              <input type="number" id="kinder" inputmode="numeric" value="0" min="0">
-            </div>
+            <div class="field"><label for="alter">Alter</label><input type="number" id="alter" inputmode="numeric" value="26"></div>
+            <div class="field"><label for="kinder">Kinder (Anzahl)</label><input type="number" id="kinder" inputmode="numeric" value="0" min="0"></div>
           </div>
-
-          <div class="checkline">
-            <input type="checkbox" id="kirchensteuer">
-            <label for="kirchensteuer" style="margin:0;">Kirchensteuerpflichtig</label>
-          </div>
-
-          <div class="field">
-            <label for="zusatzbeitrag">Krankenkassen-Zusatzbeitrag (%)</label>
-            <input type="number" id="zusatzbeitrag" inputmode="decimal" value="2.9" step="0.1">
-          </div>
+          <div class="checkline"><input type="checkbox" id="kirchensteuer"><label for="kirchensteuer" style="margin:0;">Kirchensteuerpflichtig</label></div>
+          <div class="field"><label for="zusatzbeitrag">Krankenkassen-Zusatzbeitrag (%)</label><input type="number" id="zusatzbeitrag" inputmode="decimal" value="3.1" step="0.1"></div>
 
           <div class="ledger" id="lohnLedger">
-            <div class="row">
-              <p class="label">Bruttogehalt</p>
-              <p class="value" id="lohnOutBrutto">3.500,00 €</p>
-            </div>
-            <div class="row sub">
-              <p class="label">Krankenversicherung</p>
-              <p class="value" id="lohnOutKV">– 0,00 €</p>
-            </div>
-            <div class="row sub">
-              <p class="label">Pflegeversicherung</p>
-              <p class="value" id="lohnOutPV">– 0,00 €</p>
-            </div>
-            <div class="row sub">
-              <p class="label">Rentenversicherung</p>
-              <p class="value" id="lohnOutRV">– 0,00 €</p>
-            </div>
-            <div class="row sub">
-              <p class="label">Arbeitslosenversicherung</p>
-              <p class="value" id="lohnOutALV">– 0,00 €</p>
-            </div>
-            <div class="row">
-              <p class="label">Lohnsteuer</p>
-              <p class="value" id="lohnOutLSt">– 0,00 €</p>
-            </div>
-            <div class="row">
-              <p class="label">Solidaritätszuschlag</p>
-              <p class="value" id="lohnOutSoli">– 0,00 €</p>
-            </div>
-            <div class="row" id="rowKirche">
-              <p class="label">Kirchensteuer</p>
-              <p class="value" id="lohnOutKirche">– 0,00 €</p>
-            </div>
-            <div class="row total">
-              <p class="label">Nettogehalt</p>
-              <p class="value" id="lohnOutNetto">0,00 €</p>
-            </div>
-            <div class="row sub" style="margin-top:6px;">
-              <p class="label">Arbeitgeberkosten gesamt</p>
-              <p class="value" id="lohnOutAG">0,00 €</p>
-            </div>
+            <div class="row"><p class="label">Bruttogehalt</p><p class="value" id="lohnOutBrutto">3.500,00 €</p></div>
+            <div class="row sub"><p class="label">Krankenversicherung</p><p class="value" id="lohnOutKV">– 0,00 €</p></div>
+            <div class="row sub"><p class="label">Pflegeversicherung</p><p class="value" id="lohnOutPV">– 0,00 €</p></div>
+            <div class="row sub"><p class="label">Rentenversicherung</p><p class="value" id="lohnOutRV">– 0,00 €</p></div>
+            <div class="row sub"><p class="label">Arbeitslosenversicherung</p><p class="value" id="lohnOutALV">– 0,00 €</p></div>
+            <div class="row"><p class="label">Lohnsteuer</p><p class="value" id="lohnOutLSt">– 0,00 €</p></div>
+            <div class="row"><p class="label">Solidaritätszuschlag</p><p class="value" id="lohnOutSoli">– 0,00 €</p></div>
+            <div class="row" id="rowKirche"><p class="label">Kirchensteuer</p><p class="value" id="lohnOutKirche">– 0,00 €</p></div>
+            <div class="row total"><p class="label">Nettogehalt</p><p class="value" id="lohnOutNetto">0,00 €</p></div>
+            <div class="row sub" style="margin-top:6px;"><p class="label">Arbeitgeberkosten gesamt</p><p class="value" id="lohnOutAG">0,00 €</p></div>
           </div>
+          <p class="disclaimer">Vereinfachte Beispielrechnung auf Basis der Werte 2026 (§32a EStG, gesetzliche Sozialversicherung). Steuerklassen V/VI stark vereinfacht. Keine Berücksichtigung von Sonderzahlungen, PKV, Mini-/Midijob oder individuellen Freibeträgen. Keine Steuerberatung.</p>
+        </div>
+        <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+      </section>
 
-          <p class="disclaimer">Vereinfachte Beispielrechnung auf Basis der Werte 2026 (§32a EStG, gesetzliche Sozialversicherung). Steuerklassen V/VI stark vereinfacht. Keine Berücksichtigung von Sonderzahlungen, PKV, Mini-/Midijob oder Freibeträgen auf der Lohnsteuerkarte. Keine Steuerberatung – für eine verbindliche Berechnung eine echte Gehaltsabrechnung oder einen Steuerberater konsultieren.</p>
+      <!-- ===== PAAR-VERGLEICH ===== -->
+      <section class="view" id="view-paar">
+        <header class="intro"><h2>Paar-Vergleich</h2><p class="subtitle">III/V, IV/IV oder IV mit Faktor – was bringt mehr?</p></header>
+        <div class="card">
+          <div class="row-inline">
+            <div class="field"><label for="paarBruttoA">Brutto Partner A (€/Monat)</label><input type="number" id="paarBruttoA" inputmode="decimal" value="4200"></div>
+            <div class="field"><label for="paarBruttoB">Brutto Partner B (€/Monat)</label><input type="number" id="paarBruttoB" inputmode="decimal" value="2600"></div>
+          </div>
+          <div class="row-inline">
+            <div class="field"><label for="paarAlterA">Alter A</label><input type="number" id="paarAlterA" inputmode="numeric" value="26"></div>
+            <div class="field"><label for="paarAlterB">Alter B</label><input type="number" id="paarAlterB" inputmode="numeric" value="26"></div>
+          </div>
+          <div class="row-inline">
+            <div class="field"><label for="paarBundesland">Bundesland</label>
+              <select id="paarBundesland">
+                <option value="BW">Baden-Württemberg</option><option value="BY">Bayern</option>
+                <option value="BE" selected>Berlin</option><option value="BB">Brandenburg</option>
+                <option value="HB">Bremen</option><option value="HH">Hamburg</option>
+                <option value="HE">Hessen</option><option value="MV">Mecklenburg-Vorpommern</option>
+                <option value="NI">Niedersachsen</option><option value="NW">Nordrhein-Westfalen</option>
+                <option value="RP">Rheinland-Pfalz</option><option value="SL">Saarland</option>
+                <option value="SN">Sachsen</option><option value="ST">Sachsen-Anhalt</option>
+                <option value="SH">Schleswig-Holstein</option><option value="TH">Thüringen</option>
+              </select>
+            </div>
+            <div class="field"><label for="paarKinder">Kinder (gemeinsam)</label><input type="number" id="paarKinder" inputmode="numeric" value="0" min="0"></div>
+          </div>
+          <div class="checkline"><input type="checkbox" id="paarKirchensteuer"><label for="paarKirchensteuer" style="margin:0;">Kirchensteuerpflichtig</label></div>
+          <div class="field"><label for="paarZusatzbeitrag">Krankenkassen-Zusatzbeitrag (%)</label><input type="number" id="paarZusatzbeitrag" inputmode="decimal" value="3.1" step="0.1"></div>
         </div>
 
-        <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+        <div id="paarErgebnisse"></div>
+
+        <p class="disclaimer">Die drei Modelle unterscheiden sich vor allem in der monatlichen Verteilung (Liquidität) – nach einer gemeinsamen Steuererklärung gleicht sich die tatsächliche Jahressteuerlast in der Regel an. Das Faktorverfahren kommt der späteren Steuerlast am nächsten und vermeidet größere Nachzahlungen oder Erstattungen. Steuerklasse V stark vereinfacht.</p>
+      </section>
+
+      <!-- ===== BRUTTO-ZIEL-RECHNER ===== -->
+      <section class="view" id="view-ziel">
+        <header class="intro"><h2>Brutto für mehr Netto</h2><p class="subtitle">Wie viel mehr Brutto musst du fordern?</p></header>
+        <div class="card">
+          <p class="hint">Nutzt die Einstellungen aus dem Lohnsteuer-Rechner (Steuerklasse, Bundesland, Alter usw.) – dort ggf. vorher anpassen.</p>
+          <div class="field"><label for="zielDelta">Gewünschtes Netto-Plus pro Monat (€)</label><input type="number" id="zielDelta" inputmode="decimal" value="200"></div>
+          <div class="ledger">
+            <div class="row"><p class="label">Aktuelles Bruttogehalt</p><p class="value" id="zielAktBrutto">0,00 €</p></div>
+            <div class="row"><p class="label">Aktuelles Nettogehalt</p><p class="value" id="zielAktNetto">0,00 €</p></div>
+            <div class="row"><p class="label">Ziel-Nettogehalt</p><p class="value" id="zielZielNetto">0,00 €</p></div>
+            <div class="row"><p class="label">Benötigtes Bruttogehalt</p><p class="value" id="zielBenoetigtBrutto">0,00 €</p></div>
+            <div class="row total"><p class="label">Nötige Erhöhung</p><p class="value" id="zielErhoehung">0,00 €</p></div>
+            <div class="row sub"><p class="label">entspricht</p><p class="value" id="zielErhoehungProzent">0,0 %</p></div>
+          </div>
+        </div>
+        <p class="disclaimer">Berechnet mit denselben vereinfachten Annahmen wie der Lohnsteuer-Rechner. Reale Gehaltsverhandlungen können weitere Faktoren (Bonus, Sachbezüge, Sonderzahlungen) enthalten.</p>
       </section>
 
     </div>
@@ -497,30 +301,28 @@
   const menuPanel = document.getElementById('menuPanel');
   const backdrop = document.getElementById('backdrop');
   const appTitle = document.getElementById('appTitle');
-  const menuItemUst = document.getElementById('menuItemUst');
-  const menuItemLohn = document.getElementById('menuItemLohn');
-  const viewUst = document.getElementById('view-ust');
-  const viewLohn = document.getElementById('view-lohn');
+  const menuItems = { ust: document.getElementById('menuItemUst'), lohn: document.getElementById('menuItemLohn'), paar: document.getElementById('menuItemPaar'), ziel: document.getElementById('menuItemZiel') };
+  const views = { ust: document.getElementById('view-ust'), lohn: document.getElementById('view-lohn'), paar: document.getElementById('view-paar'), ziel: document.getElementById('view-ziel') };
+  const titles = { ust: 'MwSt-Rechner', lohn: 'Lohnsteuer-Rechner', paar: 'Paar-Vergleich', ziel: 'Brutto für mehr Netto' };
 
-  function toggleMenu(open){
-    menuPanel.classList.toggle('open', open);
-    backdrop.classList.toggle('open', open);
-  }
+  function toggleMenu(open){ menuPanel.classList.toggle('open', open); backdrop.classList.toggle('open', open); }
   menuBtn.addEventListener('click', () => toggleMenu(!menuPanel.classList.contains('open')));
   backdrop.addEventListener('click', () => toggleMenu(false));
 
   function showView(view){
-    const isUst = view === 'ust';
-    viewUst.classList.toggle('active', isUst);
-    viewLohn.classList.toggle('active', !isUst);
-    menuItemUst.classList.toggle('active', isUst);
-    menuItemLohn.classList.toggle('active', !isUst);
-    appTitle.textContent = isUst ? 'MwSt-Rechner' : 'Lohnsteuer-Rechner';
+    Object.keys(views).forEach(k => {
+      views[k].classList.toggle('active', k === view);
+      menuItems[k].classList.toggle('active', k === view);
+    });
+    appTitle.textContent = titles[view];
     toggleMenu(false);
     try{ localStorage.setItem('steuer-app-view', view); }catch(e){}
+    if(view === 'paar') calculatePaar();
+    if(view === 'ziel') calculateZiel();
   }
-  menuItemUst.addEventListener('click', () => showView('ust'));
-  menuItemLohn.addEventListener('click', () => showView('lohn'));
+  Object.keys(menuItems).forEach(k => menuItems[k].addEventListener('click', () => showView(k)));
+
+  function fmt(n){ return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €'; }
 
   /* ===================== USt-RECHNER ===================== */
   const amountInput = document.getElementById('amount');
@@ -533,35 +335,18 @@
   const outNetto = document.getElementById('outNetto');
   const outSteuer = document.getElementById('outSteuer');
   const outBrutto = document.getElementById('outBrutto');
-
-  let mode = 'n2b';
-  let rate = 19;
+  let mode = 'n2b', rate = 19;
   const STORAGE_KEY = 'mwst-rechner-state';
 
-  function fmt(n){
-    return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
-  }
-
-  function saveUstState(){
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ amount: amountInput.value, mode, rate }));
-    }catch(e){}
-  }
+  function saveUstState(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify({ amount: amountInput.value, mode, rate })); }catch(e){} }
   function loadUstState(){
-    try{
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if(!raw) return;
-      const s = JSON.parse(raw);
-      if(s.amount !== undefined) amountInput.value = s.amount;
-      if(s.mode) mode = s.mode;
-      if(s.rate) rate = s.rate;
+    try{ const raw = localStorage.getItem(STORAGE_KEY); if(!raw) return; const s = JSON.parse(raw);
+      if(s.amount !== undefined) amountInput.value = s.amount; if(s.mode) mode = s.mode; if(s.rate) rate = s.rate;
     }catch(e){}
   }
-
   function setMode(next){
     mode = next;
-    btnN2B.classList.toggle('active', mode === 'n2b');
-    btnB2N.classList.toggle('active', mode === 'b2n');
+    btnN2B.classList.toggle('active', mode === 'n2b'); btnB2N.classList.toggle('active', mode === 'b2n');
     amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
     calculateUst();
   }
@@ -578,24 +363,18 @@
     if(mode === 'n2b'){ netto = val; steuer = netto*r; brutto = netto+steuer; }
     else { brutto = val; netto = brutto/(1+r); steuer = brutto-netto; }
     taxLabel.textContent = 'zzgl. ' + rate + ' % USt';
-    outNetto.textContent = fmt(netto);
-    outSteuer.textContent = fmt(steuer);
-    outBrutto.textContent = fmt(brutto);
+    outNetto.textContent = fmt(netto); outSteuer.textContent = fmt(steuer); outBrutto.textContent = fmt(brutto);
     saveUstState();
   }
   amountInput.addEventListener('input', calculateUst);
   btnN2B.addEventListener('click', () => setMode('n2b'));
   btnB2N.addEventListener('click', () => setMode('b2n'));
   rateButtons.forEach(b => b.addEventListener('click', () => setRate(parseFloat(b.dataset.rate), false)));
-  customRate.addEventListener('input', () => {
-    const v = parseFloat(customRate.value.replace(',', '.'));
-    if(!isNaN(v)) setRate(v, true);
-  });
+  customRate.addEventListener('input', () => { const v = parseFloat(customRate.value.replace(',', '.')); if(!isNaN(v)) setRate(v, true); });
 
   function initUst(){
     loadUstState();
-    btnN2B.classList.toggle('active', mode === 'n2b');
-    btnB2N.classList.toggle('active', mode === 'b2n');
+    btnN2B.classList.toggle('active', mode === 'n2b'); btnB2N.classList.toggle('active', mode === 'b2n');
     amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
     const preset = Array.from(rateButtons).find(b => parseFloat(b.dataset.rate) === rate);
     rateButtons.forEach(b => b.classList.toggle('active', b === preset));
@@ -603,18 +382,7 @@
     calculateUst();
   }
 
-  /* ===================== LOHNSTEUER-RECHNER ===================== */
-  const lohnBrutto = document.getElementById('lohnBrutto');
-  const steuerklasse = document.getElementById('steuerklasse');
-  const bundesland = document.getElementById('bundesland');
-  const alterInput = document.getElementById('alter');
-  const kinderInput = document.getElementById('kinder');
-  const kirchensteuerCheck = document.getElementById('kirchensteuer');
-  const zusatzbeitragInput = document.getElementById('zusatzbeitrag');
-  const rowKirche = document.getElementById('rowKirche');
-  const LOHN_STORAGE_KEY = 'lohn-rechner-state';
-
-  // Einkommensteuertarif 2026 nach §32a EStG
+  /* ===================== STEUER-KERNFUNKTIONEN (geteilt) ===================== */
   function grundtarif(zve){
     if(zve <= 12348) return 0;
     if(zve <= 17799){ const y=(zve-12348)/10000; return (914.51*y+1400)*y; }
@@ -628,115 +396,88 @@
     if(est <= freigrenze) return 0;
     return Math.min(0.119*(est-freigrenze), 0.055*est);
   }
-
   function berechneSV(bruttoMonat, alter, kinderAnzahl, land, zusatzbeitragKV){
-    const bbgKVPV = 5812.50;
-    const bbgRVALV = 8450.00;
+    const bbgKVPV = 5812.50, bbgRVALV = 8450.00;
     const bemessungKVPV = Math.min(bruttoMonat, bbgKVPV);
     const bemessungRVALV = Math.min(bruttoMonat, bbgRVALV);
-
-    const kvSatzAN = 7.30 + zusatzbeitragKV/2;
-    const kvSatzAG = 7.30 + zusatzbeitragKV/2;
-    const kvBeitragAN = bemessungKVPV * kvSatzAN/100;
-    const kvBeitragAG = bemessungKVPV * kvSatzAG/100;
-
+    const kvSatz = 7.30 + zusatzbeitragKV/2;
+    const kvBeitragAN = bemessungKVPV * kvSatz/100, kvBeitragAG = bemessungKVPV * kvSatz/100;
     const pvSatzANBase = (land === 'SN') ? 2.30 : 1.80;
     const pvSatzAGBase = (land === 'SN') ? 1.30 : 1.80;
     const kinderlosZuschlag = (alter >= 23 && kinderAnzahl === 0) ? 0.60 : 0;
     const kinderAbschlag = kinderAnzahl >= 2 ? Math.min((kinderAnzahl-1)*0.25, 1.00) : 0;
     const pvSatzAN = Math.max(0, pvSatzANBase + kinderlosZuschlag - kinderAbschlag);
-    const pvBeitragAN = bemessungKVPV * pvSatzAN/100;
-    const pvBeitragAG = bemessungKVPV * pvSatzAGBase/100;
-
-    const rvBeitragAN = bemessungRVALV * 9.30/100;
-    const rvBeitragAG = bemessungRVALV * 9.30/100;
-    const alvBeitragAN = bemessungRVALV * 1.30/100;
-    const alvBeitragAG = bemessungRVALV * 1.30/100;
-
-    return {
-      kvBeitragAN, pvBeitragAN, rvBeitragAN, alvBeitragAN,
-      kvBeitragAG, pvBeitragAG, rvBeitragAG, alvBeitragAG,
-      gesamtAN: kvBeitragAN+pvBeitragAN+rvBeitragAN+alvBeitragAN,
-      gesamtAG: kvBeitragAG+pvBeitragAG+rvBeitragAG+alvBeitragAG
-    };
+    const pvBeitragAN = bemessungKVPV * pvSatzAN/100, pvBeitragAG = bemessungKVPV * pvSatzAGBase/100;
+    const rvBeitragAN = bemessungRVALV * 9.30/100, rvBeitragAG = bemessungRVALV * 9.30/100;
+    const alvBeitragAN = bemessungRVALV * 1.30/100, alvBeitragAG = bemessungRVALV * 1.30/100;
+    return { kvBeitragAN, pvBeitragAN, rvBeitragAN, alvBeitragAN, kvBeitragAG, pvBeitragAG, rvBeitragAG, alvBeitragAG,
+      gesamtAN: kvBeitragAN+pvBeitragAN+rvBeitragAN+alvBeitragAN, gesamtAG: kvBeitragAG+pvBeitragAG+rvBeitragAG+alvBeitragAG };
   }
+  function estFuerKlasse(zveBase, klasse, kinderAnzahl){
+    const werbungskosten=1230, sonderausgaben=36;
+    let est, verheiratetSplitting=false, zve;
+    if(klasse==='V'||klasse==='VI'){ zve = zveBase; est = grundtarif(zve); }
+    else if(klasse==='III'){ zve = Math.max(0, zveBase-werbungskosten-sonderausgaben); est = splittingtarif(zve); verheiratetSplitting=true; }
+    else if(klasse==='II'){ const entlastung = 4260+240*Math.max(0,kinderAnzahl-1); zve = Math.max(0, zveBase-werbungskosten-sonderausgaben-entlastung); est = grundtarif(zve); }
+    else { zve = Math.max(0, zveBase-werbungskosten-sonderausgaben); est = grundtarif(zve); }
+    return { est, verheiratetSplitting, zve };
+  }
+  function vollBerechnung(bruttoMonat, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV, estOverrideJahr){
+    const sv = berechneSV(bruttoMonat, alter, kinderAnzahl, land, zusatzbeitragKV);
+    const zveBase = Math.max(0, bruttoMonat*12 - sv.gesamtAN*12);
+    const r = estFuerKlasse(zveBase, klasse, kinderAnzahl);
+    const est = estOverrideJahr !== undefined ? estOverrideJahr : r.est;
+    const soliJahr = soli(est, r.verheiratetSplitting);
+    const kirchensteuerSatz = kirche ? (['BY','BW'].includes(land)?0.08:0.09) : 0;
+    const kirchensteuerJahr = est*kirchensteuerSatz;
+    const lstMonat = est/12, soliMonat = soliJahr/12, kirchensteuerMonat = kirchensteuerJahr/12;
+    const nettoMonat = bruttoMonat - sv.gesamtAN - lstMonat - soliMonat - kirchensteuerMonat;
+    return { sv, est, lstMonat, soliMonat, kirchensteuerMonat, nettoMonat, agKosten: bruttoMonat + sv.gesamtAG, zveBase, zveNachAbzug: r.zve };
+  }
+
+  /* ===================== LOHNSTEUER-RECHNER ===================== */
+  const lohnBrutto = document.getElementById('lohnBrutto');
+  const steuerklasse = document.getElementById('steuerklasse');
+  const bundesland = document.getElementById('bundesland');
+  const alterInput = document.getElementById('alter');
+  const kinderInput = document.getElementById('kinder');
+  const kirchensteuerCheck = document.getElementById('kirchensteuer');
+  const zusatzbeitragInput = document.getElementById('zusatzbeitrag');
+  const rowKirche = document.getElementById('rowKirche');
+  const LOHN_STORAGE_KEY = 'lohn-rechner-state';
 
   function calculateLohn(){
     const bruttoMonat = parseFloat(lohnBrutto.value.replace(',', '.')) || 0;
-    const bruttoJahr = bruttoMonat * 12;
     const alter = parseInt(alterInput.value) || 0;
     const kinderAnzahl = parseInt(kinderInput.value) || 0;
-    const land = bundesland.value;
-    const klasse = steuerklasse.value;
+    const land = bundesland.value, klasse = steuerklasse.value;
     const zusatzbeitragKV = parseFloat(zusatzbeitragInput.value.replace(',', '.')) || 0;
+    const kirche = kirchensteuerCheck.checked;
 
-    const sv = berechneSV(bruttoMonat, alter, kinderAnzahl, land, zusatzbeitragKV);
-    const svJahrAN = sv.gesamtAN * 12;
-
-    const werbungskosten = 1230;
-    const sonderausgaben = 36;
-    const entlastung = klasse === 'II' ? (4260 + 240*Math.max(0, kinderAnzahl-1)) : 0;
-
-    const zveBase = Math.max(0, bruttoJahr - svJahrAN);
-    let est, verheiratetSplitting = false;
-
-    if(klasse === 'V' || klasse === 'VI'){
-      est = grundtarif(zveBase);
-    } else if(klasse === 'III'){
-      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben);
-      est = splittingtarif(zve);
-      verheiratetSplitting = true;
-    } else if(klasse === 'II'){
-      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben - entlastung);
-      est = grundtarif(zve);
-    } else {
-      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben);
-      est = grundtarif(zve);
-    }
-
-    const soliJahr = soli(est, verheiratetSplitting);
-    const kirchensteuerSatz = kirchensteuerCheck.checked ? (['BY','BW'].includes(land) ? 0.08 : 0.09) : 0;
-    const kirchensteuerJahr = est * kirchensteuerSatz;
-
-    const lstMonat = est/12;
-    const soliMonat = soliJahr/12;
-    const kirchensteuerMonat = kirchensteuerJahr/12;
-    const nettoMonat = bruttoMonat - sv.gesamtAN - lstMonat - soliMonat - kirchensteuerMonat;
-    const agKosten = bruttoMonat + sv.gesamtAG;
+    const r = vollBerechnung(bruttoMonat, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV);
 
     document.getElementById('lohnOutBrutto').textContent = fmt(bruttoMonat);
-    document.getElementById('lohnOutKV').textContent = '– ' + fmt(sv.kvBeitragAN);
-    document.getElementById('lohnOutPV').textContent = '– ' + fmt(sv.pvBeitragAN);
-    document.getElementById('lohnOutRV').textContent = '– ' + fmt(sv.rvBeitragAN);
-    document.getElementById('lohnOutALV').textContent = '– ' + fmt(sv.alvBeitragAN);
-    document.getElementById('lohnOutLSt').textContent = '– ' + fmt(lstMonat);
-    document.getElementById('lohnOutSoli').textContent = '– ' + fmt(soliMonat);
-    document.getElementById('lohnOutKirche').textContent = '– ' + fmt(kirchensteuerMonat);
-    rowKirche.style.display = kirchensteuerCheck.checked ? 'flex' : 'none';
-    document.getElementById('lohnOutNetto').textContent = fmt(Math.max(0, nettoMonat));
-    document.getElementById('lohnOutAG').textContent = fmt(agKosten);
+    document.getElementById('lohnOutKV').textContent = '– ' + fmt(r.sv.kvBeitragAN);
+    document.getElementById('lohnOutPV').textContent = '– ' + fmt(r.sv.pvBeitragAN);
+    document.getElementById('lohnOutRV').textContent = '– ' + fmt(r.sv.rvBeitragAN);
+    document.getElementById('lohnOutALV').textContent = '– ' + fmt(r.sv.alvBeitragAN);
+    document.getElementById('lohnOutLSt').textContent = '– ' + fmt(r.lstMonat);
+    document.getElementById('lohnOutSoli').textContent = '– ' + fmt(r.soliMonat);
+    document.getElementById('lohnOutKirche').textContent = '– ' + fmt(r.kirchensteuerMonat);
+    rowKirche.style.display = kirche ? 'flex' : 'none';
+    document.getElementById('lohnOutNetto').textContent = fmt(Math.max(0, r.nettoMonat));
+    document.getElementById('lohnOutAG').textContent = fmt(r.agKosten);
 
     saveLohnState();
   }
-
   function saveLohnState(){
-    try{
-      localStorage.setItem(LOHN_STORAGE_KEY, JSON.stringify({
-        brutto: lohnBrutto.value,
-        klasse: steuerklasse.value,
-        land: bundesland.value,
-        alter: alterInput.value,
-        kinder: kinderInput.value,
-        kirche: kirchensteuerCheck.checked,
-        zusatzbeitrag: zusatzbeitragInput.value
-      }));
-    }catch(e){}
+    try{ localStorage.setItem(LOHN_STORAGE_KEY, JSON.stringify({
+      brutto: lohnBrutto.value, klasse: steuerklasse.value, land: bundesland.value, alter: alterInput.value,
+      kinder: kinderInput.value, kirche: kirchensteuerCheck.checked, zusatzbeitrag: zusatzbeitragInput.value
+    })); }catch(e){}
   }
   function loadLohnState(){
-    try{
-      const raw = localStorage.getItem(LOHN_STORAGE_KEY);
-      if(!raw) return;
-      const s = JSON.parse(raw);
+    try{ const raw = localStorage.getItem(LOHN_STORAGE_KEY); if(!raw) return; const s = JSON.parse(raw);
       if(s.brutto !== undefined) lohnBrutto.value = s.brutto;
       if(s.klasse) steuerklasse.value = s.klasse;
       if(s.land) bundesland.value = s.land;
@@ -746,30 +487,142 @@
       if(s.zusatzbeitrag !== undefined) zusatzbeitragInput.value = s.zusatzbeitrag;
     }catch(e){}
   }
-
   [lohnBrutto, steuerklasse, bundesland, alterInput, kinderInput, kirchensteuerCheck, zusatzbeitragInput]
-    .forEach(el => el.addEventListener('input', calculateLohn));
+    .forEach(el => el.addEventListener('input', () => { calculateLohn(); if(views.ziel.classList.contains('active')) calculateZiel(); }));
 
-  function initLohn(){
-    loadLohnState();
-    calculateLohn();
+  function initLohn(){ loadLohnState(); calculateLohn(); }
+
+  /* ===================== PAAR-VERGLEICH ===================== */
+  const paarBruttoA = document.getElementById('paarBruttoA');
+  const paarBruttoB = document.getElementById('paarBruttoB');
+  const paarAlterA = document.getElementById('paarAlterA');
+  const paarAlterB = document.getElementById('paarAlterB');
+  const paarBundesland = document.getElementById('paarBundesland');
+  const paarKinder = document.getElementById('paarKinder');
+  const paarKirchensteuer = document.getElementById('paarKirchensteuer');
+  const paarZusatzbeitrag = document.getElementById('paarZusatzbeitrag');
+  const paarErgebnisse = document.getElementById('paarErgebnisse');
+
+  function calculatePaar(){
+    const bA = parseFloat(paarBruttoA.value.replace(',', '.')) || 0;
+    const bB = parseFloat(paarBruttoB.value.replace(',', '.')) || 0;
+    const altA = parseInt(paarAlterA.value) || 0;
+    const altB = parseInt(paarAlterB.value) || 0;
+    const land = paarBundesland.value;
+    const kinderAnzahl = parseInt(paarKinder.value) || 0;
+    const kirche = paarKirchensteuer.checked;
+    const zb = parseFloat(paarZusatzbeitrag.value.replace(',', '.')) || 0;
+
+    // Szenario 1: III/V (höheres Gehalt bekommt III)
+    const aHatIII = bA >= bB;
+    const rIIIA = vollBerechnung(bA, aHatIII ? 'III' : 'V', land, altA, kinderAnzahl, kirche, zb);
+    const rIIIB = vollBerechnung(bB, aHatIII ? 'V' : 'III', land, altB, kinderAnzahl, kirche, zb);
+
+    // Szenario 2: IV/IV
+    const rIVA = vollBerechnung(bA, 'IV', land, altA, kinderAnzahl, kirche, zb);
+    const rIVB = vollBerechnung(bB, 'IV', land, altB, kinderAnzahl, kirche, zb);
+
+    // Szenario 3: IV mit Faktor
+    const svA = berechneSV(bA, altA, kinderAnzahl, land, zb);
+    const svB = berechneSV(bB, altB, kinderAnzahl, land, zb);
+    const zveBaseA = Math.max(0, bA*12 - svA.gesamtAN*12);
+    const zveBaseB = Math.max(0, bB*12 - svB.gesamtAN*12);
+    const eA = estFuerKlasse(zveBaseA, 'IV', kinderAnzahl);
+    const eB = estFuerKlasse(zveBaseB, 'IV', kinderAnzahl);
+    const summeIndividuell = eA.est + eB.est;
+    const estJoint = splittingtarif(eA.zve + eB.zve);
+    const factor = summeIndividuell > 0 ? estJoint / summeIndividuell : 1;
+    const rFaktorA = vollBerechnung(bA, 'IV', land, altA, kinderAnzahl, kirche, zb, eA.est * factor);
+    const rFaktorB = vollBerechnung(bB, 'IV', land, altB, kinderAnzahl, kirche, zb, eB.est * factor);
+
+    const szenarien = [
+      { name: aHatIII ? 'III (A) / V (B)' : 'V (A) / III (B)', a: rIIIA, b: rIIIB },
+      { name: 'IV / IV', a: rIVA, b: rIVB },
+      { name: 'IV mit Faktor', a: rFaktorA, b: rFaktorB, factor }
+    ];
+    szenarien.forEach(s => s.summe = s.a.nettoMonat + s.b.nettoMonat);
+    const maxSumme = Math.max(...szenarien.map(s => s.summe));
+
+    paarErgebnisse.innerHTML = szenarien.map(s => `
+      <div class="scenario ${s.summe === maxSumme ? 'best' : ''}">
+        <h3>${s.name} ${s.summe === maxSumme ? '<span class="tag">höchste Summe</span>' : ''}</h3>
+        <div class="row"><p class="label">Netto Partner A</p><p class="value">${fmt(s.a.nettoMonat)}</p></div>
+        <div class="row"><p class="label">Netto Partner B</p><p class="value">${fmt(s.b.nettoMonat)}</p></div>
+        <div class="row total"><p class="label">Summe / Monat</p><p class="value">${fmt(s.summe)}</p></div>
+      </div>
+    `).join('');
+
+    savePaarState();
   }
+  function savePaarState(){
+    try{ localStorage.setItem('paar-rechner-state', JSON.stringify({
+      bA: paarBruttoA.value, bB: paarBruttoB.value, altA: paarAlterA.value, altB: paarAlterB.value,
+      land: paarBundesland.value, kinder: paarKinder.value, kirche: paarKirchensteuer.checked, zb: paarZusatzbeitrag.value
+    })); }catch(e){}
+  }
+  function loadPaarState(){
+    try{ const raw = localStorage.getItem('paar-rechner-state'); if(!raw) return; const s = JSON.parse(raw);
+      if(s.bA !== undefined) paarBruttoA.value = s.bA;
+      if(s.bB !== undefined) paarBruttoB.value = s.bB;
+      if(s.altA !== undefined) paarAlterA.value = s.altA;
+      if(s.altB !== undefined) paarAlterB.value = s.altB;
+      if(s.land) paarBundesland.value = s.land;
+      if(s.kinder !== undefined) paarKinder.value = s.kinder;
+      if(s.kirche !== undefined) paarKirchensteuer.checked = s.kirche;
+      if(s.zb !== undefined) paarZusatzbeitrag.value = s.zb;
+    }catch(e){}
+  }
+  [paarBruttoA, paarBruttoB, paarAlterA, paarAlterB, paarBundesland, paarKinder, paarKirchensteuer, paarZusatzbeitrag]
+    .forEach(el => el.addEventListener('input', calculatePaar));
+
+  /* ===================== BRUTTO-ZIEL-RECHNER ===================== */
+  const zielDelta = document.getElementById('zielDelta');
+
+  function findBruttoForNetto(targetNetto, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV){
+    let lo = 0, hi = 200000;
+    for(let i = 0; i < 60; i++){
+      const mid = (lo + hi) / 2;
+      const n = vollBerechnung(mid, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV).nettoMonat;
+      if(n < targetNetto) lo = mid; else hi = mid;
+    }
+    return hi;
+  }
+
+  function calculateZiel(){
+    const bruttoMonat = parseFloat(lohnBrutto.value.replace(',', '.')) || 0;
+    const alter = parseInt(alterInput.value) || 0;
+    const kinderAnzahl = parseInt(kinderInput.value) || 0;
+    const land = bundesland.value, klasse = steuerklasse.value;
+    const zusatzbeitragKV = parseFloat(zusatzbeitragInput.value.replace(',', '.')) || 0;
+    const kirche = kirchensteuerCheck.checked;
+    const delta = parseFloat(zielDelta.value.replace(',', '.')) || 0;
+
+    const aktuell = vollBerechnung(bruttoMonat, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV);
+    const zielNetto = aktuell.nettoMonat + delta;
+    const benoetigtBrutto = findBruttoForNetto(zielNetto, klasse, land, alter, kinderAnzahl, kirche, zusatzbeitragKV);
+    const erhoehung = benoetigtBrutto - bruttoMonat;
+    const erhoehungProzent = bruttoMonat > 0 ? (erhoehung / bruttoMonat) * 100 : 0;
+
+    document.getElementById('zielAktBrutto').textContent = fmt(bruttoMonat);
+    document.getElementById('zielAktNetto').textContent = fmt(aktuell.nettoMonat);
+    document.getElementById('zielZielNetto').textContent = fmt(zielNetto);
+    document.getElementById('zielBenoetigtBrutto').textContent = fmt(benoetigtBrutto);
+    document.getElementById('zielErhoehung').textContent = '+ ' + fmt(erhoehung);
+    document.getElementById('zielErhoehungProzent').textContent = erhoehungProzent.toLocaleString('de-DE', {minimumFractionDigits:1, maximumFractionDigits:1}) + ' %';
+  }
+  zielDelta.addEventListener('input', calculateZiel);
 
   /* ===================== INIT ===================== */
   initUst();
   initLohn();
+  loadPaarState();
 
   let initialView = 'ust';
-  try{
-    const savedView = localStorage.getItem('steuer-app-view');
-    if(savedView) initialView = savedView;
-  }catch(e){}
+  try{ const savedView = localStorage.getItem('steuer-app-view'); if(savedView && views[savedView]) initialView = savedView; }catch(e){}
   showView(initialView);
 
   if('serviceWorker' in navigator){
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
-    });
+    window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
   }
 </script>
 </body>
