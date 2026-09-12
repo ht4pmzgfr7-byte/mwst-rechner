@@ -3,16 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MwSt-Rechner</title>
+<title>Steuer-Rechner</title>
 
-<!-- PWA-Grundlagen -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#16233B">
 
-<!-- iOS-spezifisch: macht die App im Standalone-Modus startbar -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="MwSt-Rechner">
+<meta name="apple-mobile-web-app-title" content="Steuer-Rechner">
 <link rel="apple-touch-icon" href="icon-192.png">
 
 <style>
@@ -31,27 +29,115 @@
     background: var(--paper);
     color: var(--ink);
     font-family: Georgia, "Iowan Old Style", "Palatino Linotype", "Times New Roman", serif;
+  }
+
+  /* Topbar */
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: max(14px, env(safe-area-inset-top)) 16px 12px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--ink);
+  }
+  .topbar h1{
+    font-size: 1.15rem;
+    margin:0;
+    font-weight:700;
+  }
+  .menu-btn{
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    background: transparent;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:4px;
+    cursor:pointer;
+  }
+  .menu-btn span{
+    display:block;
+    width: 18px;
+    height: 2px;
+    background: var(--ink);
+  }
+
+  .menu-panel{
+    position: absolute;
+    right: 16px;
+    top: 64px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    min-width: 220px;
+    z-index: 30;
+    display:none;
+    box-shadow: 3px 3px 0 var(--paper-line);
+  }
+  .menu-panel.open{ display:block; }
+  .menu-item{
+    display:block;
+    width:100%;
+    text-align:left;
+    padding: 14px 16px;
+    background:none;
+    border:none;
+    border-bottom: 1px solid var(--paper-line);
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    cursor:pointer;
+  }
+  .menu-item:last-child{ border-bottom:none; }
+  .menu-item.active{
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .menu-item .desc{
+    display:block;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top:2px;
+  }
+  .menu-item.active .desc{ color: var(--paper-line); }
+
+  .backdrop{
+    display:none;
+    position: fixed;
+    inset:0;
+    z-index:25;
+  }
+  .backdrop.open{ display:block; }
+
+  main{
     display:flex;
     justify-content:center;
-    padding: max(28px, env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
+    padding: 22px 18px calc(24px + env(safe-area-inset-bottom));
   }
   .sheet{
     width:100%;
     max-width: 420px;
   }
-  header{
-    margin-bottom: 22px;
-  }
-  h1{
-    font-size: 1.7rem;
+  .view{ display:none; }
+  .view.active{ display:block; }
+
+  header.intro{ margin-bottom: 22px; }
+  header.intro h2{
+    font-size: 1.5rem;
     font-weight: 700;
     margin: 0 0 4px;
-    letter-spacing: 0.01em;
   }
   .subtitle{
     margin:0;
     color: var(--ink-soft);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-style: italic;
   }
 
@@ -62,29 +148,37 @@
     padding: 22px 20px 6px;
   }
 
-  .field{
-    margin-bottom: 18px;
-  }
+  .field{ margin-bottom: 18px; }
   label{
     display:block;
     font-size: 0.8rem;
     color: var(--ink-soft);
     margin-bottom: 6px;
   }
-  input[type="number"]{
+  input[type="number"], select{
     width:100%;
     font-family: "SF Mono", ui-monospace, "Menlo", monospace;
-    font-size: 1.4rem;
+    font-size: 1.05rem;
     padding: 10px 0;
     border:none;
     border-bottom: 1px solid var(--ink);
     background: transparent;
     color: var(--ink);
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius:0;
   }
-  input[type="number"]:focus{
+  #amount{ font-size: 1.4rem; }
+  input:focus, select:focus{
     outline:none;
     border-bottom: 2px solid var(--accent);
   }
+
+  .row-inline{
+    display:flex;
+    gap: 16px;
+  }
+  .row-inline .field{ flex:1; }
 
   .toggle{
     display:flex;
@@ -145,6 +239,15 @@
     color: var(--ink);
   }
 
+  .checkline{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 0.88rem;
+  }
+  .checkline input{ width:auto; accent-color: var(--accent); }
+
   .ledger{
     margin-top: 22px;
     border-top: 1px solid var(--ink);
@@ -161,6 +264,8 @@
     border-top: 1px solid var(--ink);
     margin-top: 4px;
   }
+  .row.sub .label{ padding-left: 10px; font-size:0.78rem; }
+  .row.sub .value{ font-size: 0.9rem; }
   .row .label{
     margin:0;
     font-size: 0.85rem;
@@ -176,6 +281,14 @@
     color: var(--accent);
   }
 
+  .disclaimer{
+    margin-top: 16px;
+    font-size: 0.72rem;
+    color: var(--ink-soft);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
   footer{
     text-align:center;
     margin-top: 26px;
@@ -186,55 +299,230 @@
 </style>
 </head>
 <body>
-  <div class="sheet">
-    <header>
-      <h1>MwSt-Rechner</h1>
-      <p class="subtitle">Netto und Brutto, sauber gegengerechnet.</p>
-    </header>
 
-    <div class="card">
-      <div class="toggle">
-        <button id="btnNettoToBrutto" class="active">Netto → Brutto</button>
-        <button id="btnBruttoToNetto">Brutto → Netto</button>
-      </div>
-
-      <div class="field">
-        <label id="amountLabel" for="amount">Nettobetrag (€)</label>
-        <input type="number" id="amount" inputmode="decimal" placeholder="0,00" value="100">
-      </div>
-
-      <div class="field">
-        <label>Steuersatz</label>
-        <div class="rates">
-          <button class="rate-btn active" data-rate="19">19 %</button>
-          <button class="rate-btn" data-rate="7">7 %</button>
-          <div class="rate-custom">
-            <input type="number" id="customRate" inputmode="decimal" placeholder="frei">
-            <span>%</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="ledger" id="ledger">
-        <div class="row">
-          <p class="label">Netto</p>
-          <p class="value" id="outNetto">100,00 €</p>
-        </div>
-        <div class="row">
-          <p class="label" id="taxLabel">zzgl. 19 % USt</p>
-          <p class="value" id="outSteuer">19,00 €</p>
-        </div>
-        <div class="row total">
-          <p class="label">Brutto</p>
-          <p class="value" id="outBrutto">119,00 €</p>
-        </div>
-      </div>
-    </div>
-
-    <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+  <div class="topbar">
+    <h1 id="appTitle">MwSt-Rechner</h1>
+    <button class="menu-btn" id="menuBtn" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="backdrop" id="backdrop"></div>
+  <div class="menu-panel" id="menuPanel">
+    <button class="menu-item active" data-view="ust" id="menuItemUst">
+      MwSt-Rechner
+      <span class="desc">Netto ↔ Brutto</span>
+    </button>
+    <button class="menu-item" data-view="lohn" id="menuItemLohn">
+      Lohnsteuer-Rechner
+      <span class="desc">Brutto → Netto Gehalt</span>
+    </button>
   </div>
 
+  <main>
+    <div class="sheet">
+
+      <!-- ===== USt-RECHNER ===== -->
+      <section class="view active" id="view-ust">
+        <header class="intro">
+          <h2>MwSt-Rechner</h2>
+          <p class="subtitle">Netto und Brutto, sauber gegengerechnet.</p>
+        </header>
+
+        <div class="card">
+          <div class="toggle">
+            <button id="btnNettoToBrutto" class="active">Netto → Brutto</button>
+            <button id="btnBruttoToNetto">Brutto → Netto</button>
+          </div>
+
+          <div class="field">
+            <label id="amountLabel" for="amount">Nettobetrag (€)</label>
+            <input type="number" id="amount" inputmode="decimal" placeholder="0,00" value="100">
+          </div>
+
+          <div class="field">
+            <label>Steuersatz</label>
+            <div class="rates">
+              <button class="rate-btn active" data-rate="19">19 %</button>
+              <button class="rate-btn" data-rate="7">7 %</button>
+              <div class="rate-custom">
+                <input type="number" id="customRate" inputmode="decimal" placeholder="frei">
+                <span>%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ledger">
+            <div class="row">
+              <p class="label">Netto</p>
+              <p class="value" id="outNetto">100,00 €</p>
+            </div>
+            <div class="row">
+              <p class="label" id="taxLabel">zzgl. 19 % USt</p>
+              <p class="value" id="outSteuer">19,00 €</p>
+            </div>
+            <div class="row total">
+              <p class="label">Brutto</p>
+              <p class="value" id="outBrutto">119,00 €</p>
+            </div>
+          </div>
+        </div>
+
+        <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+      </section>
+
+      <!-- ===== LOHNSTEUER-RECHNER ===== -->
+      <section class="view" id="view-lohn">
+        <header class="intro">
+          <h2>Lohnsteuer-Rechner</h2>
+          <p class="subtitle">Brutto- zu Nettogehalt, inkl. Steuer & Sozialabgaben.</p>
+        </header>
+
+        <div class="card">
+          <div class="field">
+            <label for="lohnBrutto">Bruttogehalt pro Monat (€)</label>
+            <input type="number" id="lohnBrutto" inputmode="decimal" value="3500">
+          </div>
+
+          <div class="row-inline">
+            <div class="field">
+              <label for="steuerklasse">Steuerklasse</label>
+              <select id="steuerklasse">
+                <option value="I">I</option>
+                <option value="II">II (alleinerziehend)</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+                <option value="VI">VI</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="bundesland">Bundesland</label>
+              <select id="bundesland">
+                <option value="BW">Baden-Württemberg</option>
+                <option value="BY">Bayern</option>
+                <option value="BE">Berlin</option>
+                <option value="BB">Brandenburg</option>
+                <option value="HB">Bremen</option>
+                <option value="HH">Hamburg</option>
+                <option value="HE">Hessen</option>
+                <option value="MV">Mecklenburg-Vorpommern</option>
+                <option value="NI">Niedersachsen</option>
+                <option value="NW" selected>Nordrhein-Westfalen</option>
+                <option value="RP">Rheinland-Pfalz</option>
+                <option value="SL">Saarland</option>
+                <option value="SN">Sachsen</option>
+                <option value="ST">Sachsen-Anhalt</option>
+                <option value="SH">Schleswig-Holstein</option>
+                <option value="TH">Thüringen</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row-inline">
+            <div class="field">
+              <label for="alter">Alter</label>
+              <input type="number" id="alter" inputmode="numeric" value="30">
+            </div>
+            <div class="field">
+              <label for="kinder">Kinder (Anzahl)</label>
+              <input type="number" id="kinder" inputmode="numeric" value="0" min="0">
+            </div>
+          </div>
+
+          <div class="checkline">
+            <input type="checkbox" id="kirchensteuer">
+            <label for="kirchensteuer" style="margin:0;">Kirchensteuerpflichtig</label>
+          </div>
+
+          <div class="field">
+            <label for="zusatzbeitrag">Krankenkassen-Zusatzbeitrag (%)</label>
+            <input type="number" id="zusatzbeitrag" inputmode="decimal" value="2.9" step="0.1">
+          </div>
+
+          <div class="ledger" id="lohnLedger">
+            <div class="row">
+              <p class="label">Bruttogehalt</p>
+              <p class="value" id="lohnOutBrutto">3.500,00 €</p>
+            </div>
+            <div class="row sub">
+              <p class="label">Krankenversicherung</p>
+              <p class="value" id="lohnOutKV">– 0,00 €</p>
+            </div>
+            <div class="row sub">
+              <p class="label">Pflegeversicherung</p>
+              <p class="value" id="lohnOutPV">– 0,00 €</p>
+            </div>
+            <div class="row sub">
+              <p class="label">Rentenversicherung</p>
+              <p class="value" id="lohnOutRV">– 0,00 €</p>
+            </div>
+            <div class="row sub">
+              <p class="label">Arbeitslosenversicherung</p>
+              <p class="value" id="lohnOutALV">– 0,00 €</p>
+            </div>
+            <div class="row">
+              <p class="label">Lohnsteuer</p>
+              <p class="value" id="lohnOutLSt">– 0,00 €</p>
+            </div>
+            <div class="row">
+              <p class="label">Solidaritätszuschlag</p>
+              <p class="value" id="lohnOutSoli">– 0,00 €</p>
+            </div>
+            <div class="row" id="rowKirche">
+              <p class="label">Kirchensteuer</p>
+              <p class="value" id="lohnOutKirche">– 0,00 €</p>
+            </div>
+            <div class="row total">
+              <p class="label">Nettogehalt</p>
+              <p class="value" id="lohnOutNetto">0,00 €</p>
+            </div>
+            <div class="row sub" style="margin-top:6px;">
+              <p class="label">Arbeitgeberkosten gesamt</p>
+              <p class="value" id="lohnOutAG">0,00 €</p>
+            </div>
+          </div>
+
+          <p class="disclaimer">Vereinfachte Beispielrechnung auf Basis der Werte 2026 (§32a EStG, gesetzliche Sozialversicherung). Steuerklassen V/VI stark vereinfacht. Keine Berücksichtigung von Sonderzahlungen, PKV, Mini-/Midijob oder Freibeträgen auf der Lohnsteuerkarte. Keine Steuerberatung – für eine verbindliche Berechnung eine echte Gehaltsabrechnung oder einen Steuerberater konsultieren.</p>
+        </div>
+
+        <footer>Beispiel-App &middot; läuft offline, sobald installiert</footer>
+      </section>
+
+    </div>
+  </main>
+
 <script>
+  /* ===================== NAVIGATION ===================== */
+  const menuBtn = document.getElementById('menuBtn');
+  const menuPanel = document.getElementById('menuPanel');
+  const backdrop = document.getElementById('backdrop');
+  const appTitle = document.getElementById('appTitle');
+  const menuItemUst = document.getElementById('menuItemUst');
+  const menuItemLohn = document.getElementById('menuItemLohn');
+  const viewUst = document.getElementById('view-ust');
+  const viewLohn = document.getElementById('view-lohn');
+
+  function toggleMenu(open){
+    menuPanel.classList.toggle('open', open);
+    backdrop.classList.toggle('open', open);
+  }
+  menuBtn.addEventListener('click', () => toggleMenu(!menuPanel.classList.contains('open')));
+  backdrop.addEventListener('click', () => toggleMenu(false));
+
+  function showView(view){
+    const isUst = view === 'ust';
+    viewUst.classList.toggle('active', isUst);
+    viewLohn.classList.toggle('active', !isUst);
+    menuItemUst.classList.toggle('active', isUst);
+    menuItemLohn.classList.toggle('active', !isUst);
+    appTitle.textContent = isUst ? 'MwSt-Rechner' : 'Lohnsteuer-Rechner';
+    toggleMenu(false);
+    try{ localStorage.setItem('steuer-app-view', view); }catch(e){}
+  }
+  menuItemUst.addEventListener('click', () => showView('ust'));
+  menuItemLohn.addEventListener('click', () => showView('lohn'));
+
+  /* ===================== USt-RECHNER ===================== */
   const amountInput = document.getElementById('amount');
   const amountLabel = document.getElementById('amountLabel');
   const customRate = document.getElementById('customRate');
@@ -246,22 +534,20 @@
   const outSteuer = document.getElementById('outSteuer');
   const outBrutto = document.getElementById('outBrutto');
 
-  let mode = 'n2b'; // n2b = Netto->Brutto, b2n = Brutto->Netto
+  let mode = 'n2b';
   let rate = 19;
-
   const STORAGE_KEY = 'mwst-rechner-state';
 
-  function saveState(){
-    try{
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
-        amount: amountInput.value,
-        mode: mode,
-        rate: rate
-      }));
-    }catch(e){ /* z.B. privater Modus - dann einfach nicht speichern */ }
+  function fmt(n){
+    return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
   }
 
-  function loadState(){
+  function saveUstState(){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ amount: amountInput.value, mode, rate }));
+    }catch(e){}
+  }
+  function loadUstState(){
     try{
       const raw = localStorage.getItem(STORAGE_KEY);
       if(!raw) return;
@@ -269,11 +555,7 @@
       if(s.amount !== undefined) amountInput.value = s.amount;
       if(s.mode) mode = s.mode;
       if(s.rate) rate = s.rate;
-    }catch(e){ /* fehlerhafte gespeicherte Daten ignorieren */ }
-  }
-
-  function fmt(n){
-    return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €';
+    }catch(e){}
   }
 
   function setMode(next){
@@ -281,37 +563,27 @@
     btnN2B.classList.toggle('active', mode === 'n2b');
     btnB2N.classList.toggle('active', mode === 'b2n');
     amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
-    calculate();
+    calculateUst();
   }
-
   function setRate(r, fromCustom){
     rate = r;
     rateButtons.forEach(b => b.classList.toggle('active', !fromCustom && parseFloat(b.dataset.rate) === r));
     if(!fromCustom) customRate.value = '';
-    calculate();
+    calculateUst();
   }
-
-  function calculate(){
+  function calculateUst(){
     const val = parseFloat(amountInput.value.replace(',', '.')) || 0;
     const r = rate / 100;
     let netto, steuer, brutto;
-    if(mode === 'n2b'){
-      netto = val;
-      steuer = netto * r;
-      brutto = netto + steuer;
-    } else {
-      brutto = val;
-      netto = brutto / (1 + r);
-      steuer = brutto - netto;
-    }
+    if(mode === 'n2b'){ netto = val; steuer = netto*r; brutto = netto+steuer; }
+    else { brutto = val; netto = brutto/(1+r); steuer = brutto-netto; }
     taxLabel.textContent = 'zzgl. ' + rate + ' % USt';
     outNetto.textContent = fmt(netto);
     outSteuer.textContent = fmt(steuer);
     outBrutto.textContent = fmt(brutto);
-    saveState();
+    saveUstState();
   }
-
-  amountInput.addEventListener('input', calculate);
+  amountInput.addEventListener('input', calculateUst);
   btnN2B.addEventListener('click', () => setMode('n2b'));
   btnB2N.addEventListener('click', () => setMode('b2n'));
   rateButtons.forEach(b => b.addEventListener('click', () => setRate(parseFloat(b.dataset.rate), false)));
@@ -320,22 +592,180 @@
     if(!isNaN(v)) setRate(v, true);
   });
 
-  function init(){
-    loadState();
-    // Toggle-Buttons an geladenen Modus anpassen
+  function initUst(){
+    loadUstState();
     btnN2B.classList.toggle('active', mode === 'n2b');
     btnB2N.classList.toggle('active', mode === 'b2n');
     amountLabel.textContent = mode === 'n2b' ? 'Nettobetrag (€)' : 'Bruttobetrag (€)';
-    // Steuersatz-Buttons an geladenen Satz anpassen
     const preset = Array.from(rateButtons).find(b => parseFloat(b.dataset.rate) === rate);
     rateButtons.forEach(b => b.classList.toggle('active', b === preset));
     if(!preset) customRate.value = rate;
-    calculate();
+    calculateUst();
   }
 
-  init();
+  /* ===================== LOHNSTEUER-RECHNER ===================== */
+  const lohnBrutto = document.getElementById('lohnBrutto');
+  const steuerklasse = document.getElementById('steuerklasse');
+  const bundesland = document.getElementById('bundesland');
+  const alterInput = document.getElementById('alter');
+  const kinderInput = document.getElementById('kinder');
+  const kirchensteuerCheck = document.getElementById('kirchensteuer');
+  const zusatzbeitragInput = document.getElementById('zusatzbeitrag');
+  const rowKirche = document.getElementById('rowKirche');
+  const LOHN_STORAGE_KEY = 'lohn-rechner-state';
 
-  // Service Worker für Offline-Nutzung registrieren
+  // Einkommensteuertarif 2026 nach §32a EStG
+  function grundtarif(zve){
+    if(zve <= 12348) return 0;
+    if(zve <= 17799){ const y=(zve-12348)/10000; return (914.51*y+1400)*y; }
+    if(zve <= 69878){ const z=(zve-17799)/10000; return (173.10*z+2397)*z+1034.87; }
+    if(zve <= 277825) return 0.42*zve - 11136.95;
+    return 0.45*zve - 19471.95;
+  }
+  function splittingtarif(zve){ return 2*grundtarif(zve/2); }
+  function soli(est, verheiratetSplitting){
+    const freigrenze = verheiratetSplitting ? 40700 : 20350;
+    if(est <= freigrenze) return 0;
+    return Math.min(0.119*(est-freigrenze), 0.055*est);
+  }
+
+  function berechneSV(bruttoMonat, alter, kinderAnzahl, land, zusatzbeitragKV){
+    const bbgKVPV = 5812.50;
+    const bbgRVALV = 8450.00;
+    const bemessungKVPV = Math.min(bruttoMonat, bbgKVPV);
+    const bemessungRVALV = Math.min(bruttoMonat, bbgRVALV);
+
+    const kvSatzAN = 7.30 + zusatzbeitragKV/2;
+    const kvSatzAG = 7.30 + zusatzbeitragKV/2;
+    const kvBeitragAN = bemessungKVPV * kvSatzAN/100;
+    const kvBeitragAG = bemessungKVPV * kvSatzAG/100;
+
+    const pvSatzANBase = (land === 'SN') ? 2.30 : 1.80;
+    const pvSatzAGBase = (land === 'SN') ? 1.30 : 1.80;
+    const kinderlosZuschlag = (alter >= 23 && kinderAnzahl === 0) ? 0.60 : 0;
+    const kinderAbschlag = kinderAnzahl >= 2 ? Math.min((kinderAnzahl-1)*0.25, 1.00) : 0;
+    const pvSatzAN = Math.max(0, pvSatzANBase + kinderlosZuschlag - kinderAbschlag);
+    const pvBeitragAN = bemessungKVPV * pvSatzAN/100;
+    const pvBeitragAG = bemessungKVPV * pvSatzAGBase/100;
+
+    const rvBeitragAN = bemessungRVALV * 9.30/100;
+    const rvBeitragAG = bemessungRVALV * 9.30/100;
+    const alvBeitragAN = bemessungRVALV * 1.30/100;
+    const alvBeitragAG = bemessungRVALV * 1.30/100;
+
+    return {
+      kvBeitragAN, pvBeitragAN, rvBeitragAN, alvBeitragAN,
+      kvBeitragAG, pvBeitragAG, rvBeitragAG, alvBeitragAG,
+      gesamtAN: kvBeitragAN+pvBeitragAN+rvBeitragAN+alvBeitragAN,
+      gesamtAG: kvBeitragAG+pvBeitragAG+rvBeitragAG+alvBeitragAG
+    };
+  }
+
+  function calculateLohn(){
+    const bruttoMonat = parseFloat(lohnBrutto.value.replace(',', '.')) || 0;
+    const bruttoJahr = bruttoMonat * 12;
+    const alter = parseInt(alterInput.value) || 0;
+    const kinderAnzahl = parseInt(kinderInput.value) || 0;
+    const land = bundesland.value;
+    const klasse = steuerklasse.value;
+    const zusatzbeitragKV = parseFloat(zusatzbeitragInput.value.replace(',', '.')) || 0;
+
+    const sv = berechneSV(bruttoMonat, alter, kinderAnzahl, land, zusatzbeitragKV);
+    const svJahrAN = sv.gesamtAN * 12;
+
+    const werbungskosten = 1230;
+    const sonderausgaben = 36;
+    const entlastung = klasse === 'II' ? (4260 + 240*Math.max(0, kinderAnzahl-1)) : 0;
+
+    const zveBase = Math.max(0, bruttoJahr - svJahrAN);
+    let est, verheiratetSplitting = false;
+
+    if(klasse === 'V' || klasse === 'VI'){
+      est = grundtarif(zveBase);
+    } else if(klasse === 'III'){
+      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben);
+      est = splittingtarif(zve);
+      verheiratetSplitting = true;
+    } else if(klasse === 'II'){
+      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben - entlastung);
+      est = grundtarif(zve);
+    } else {
+      const zve = Math.max(0, zveBase - werbungskosten - sonderausgaben);
+      est = grundtarif(zve);
+    }
+
+    const soliJahr = soli(est, verheiratetSplitting);
+    const kirchensteuerSatz = kirchensteuerCheck.checked ? (['BY','BW'].includes(land) ? 0.08 : 0.09) : 0;
+    const kirchensteuerJahr = est * kirchensteuerSatz;
+
+    const lstMonat = est/12;
+    const soliMonat = soliJahr/12;
+    const kirchensteuerMonat = kirchensteuerJahr/12;
+    const nettoMonat = bruttoMonat - sv.gesamtAN - lstMonat - soliMonat - kirchensteuerMonat;
+    const agKosten = bruttoMonat + sv.gesamtAG;
+
+    document.getElementById('lohnOutBrutto').textContent = fmt(bruttoMonat);
+    document.getElementById('lohnOutKV').textContent = '– ' + fmt(sv.kvBeitragAN);
+    document.getElementById('lohnOutPV').textContent = '– ' + fmt(sv.pvBeitragAN);
+    document.getElementById('lohnOutRV').textContent = '– ' + fmt(sv.rvBeitragAN);
+    document.getElementById('lohnOutALV').textContent = '– ' + fmt(sv.alvBeitragAN);
+    document.getElementById('lohnOutLSt').textContent = '– ' + fmt(lstMonat);
+    document.getElementById('lohnOutSoli').textContent = '– ' + fmt(soliMonat);
+    document.getElementById('lohnOutKirche').textContent = '– ' + fmt(kirchensteuerMonat);
+    rowKirche.style.display = kirchensteuerCheck.checked ? 'flex' : 'none';
+    document.getElementById('lohnOutNetto').textContent = fmt(Math.max(0, nettoMonat));
+    document.getElementById('lohnOutAG').textContent = fmt(agKosten);
+
+    saveLohnState();
+  }
+
+  function saveLohnState(){
+    try{
+      localStorage.setItem(LOHN_STORAGE_KEY, JSON.stringify({
+        brutto: lohnBrutto.value,
+        klasse: steuerklasse.value,
+        land: bundesland.value,
+        alter: alterInput.value,
+        kinder: kinderInput.value,
+        kirche: kirchensteuerCheck.checked,
+        zusatzbeitrag: zusatzbeitragInput.value
+      }));
+    }catch(e){}
+  }
+  function loadLohnState(){
+    try{
+      const raw = localStorage.getItem(LOHN_STORAGE_KEY);
+      if(!raw) return;
+      const s = JSON.parse(raw);
+      if(s.brutto !== undefined) lohnBrutto.value = s.brutto;
+      if(s.klasse) steuerklasse.value = s.klasse;
+      if(s.land) bundesland.value = s.land;
+      if(s.alter !== undefined) alterInput.value = s.alter;
+      if(s.kinder !== undefined) kinderInput.value = s.kinder;
+      if(s.kirche !== undefined) kirchensteuerCheck.checked = s.kirche;
+      if(s.zusatzbeitrag !== undefined) zusatzbeitragInput.value = s.zusatzbeitrag;
+    }catch(e){}
+  }
+
+  [lohnBrutto, steuerklasse, bundesland, alterInput, kinderInput, kirchensteuerCheck, zusatzbeitragInput]
+    .forEach(el => el.addEventListener('input', calculateLohn));
+
+  function initLohn(){
+    loadLohnState();
+    calculateLohn();
+  }
+
+  /* ===================== INIT ===================== */
+  initUst();
+  initLohn();
+
+  let initialView = 'ust';
+  try{
+    const savedView = localStorage.getItem('steuer-app-view');
+    if(savedView) initialView = savedView;
+  }catch(e){}
+  showView(initialView);
+
   if('serviceWorker' in navigator){
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js').catch(() => {});
