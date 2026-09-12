@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mwst-rechner-v3';
+const CACHE_NAME = 'mwst-rechner-v4';
 const FILES_TO_CACHE = [
   './',
   './index.html',
